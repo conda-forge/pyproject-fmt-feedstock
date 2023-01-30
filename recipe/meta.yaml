@@ -1,6 +1,5 @@
 {% set pytest_args = "python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail" %}
 {% set version = "0.6.0" %}
-{% set pytest_args = "python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail" %}
 
 package:
   name: pyproject-fmt
@@ -19,13 +18,13 @@ build:
 
 requirements:
   host:
-    - hatch-vcs >=0.2
-    - hatchling >=1.11.1
+    - hatch-vcs >=0.3
+    - hatchling >=1.12.2
     - pip
     - python >=3.7
   run:
     - python >=3.7
-    - packaging >=21.3
+    - packaging >=23
     - tomlkit >=0.11.6
     - typing_extensions >=4.4
 
