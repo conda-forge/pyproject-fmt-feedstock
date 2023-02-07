@@ -1,5 +1,6 @@
 {% set pytest_args = "python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail" %}
-{% set version = "0.6.0" %}
+{% set pytest_args = "python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail" %}
+{% set version = "0.7.0" %}
 
 package:
   name: pyproject-fmt
@@ -7,7 +8,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/p/pyproject-fmt/pyproject_fmt-{{ version }}.tar.gz
-  sha256: 18421e52c65bc643608975120d080c44c0baa0d9d1c18542c1d85c26b3707eac
+  sha256: 1c342ceaa3946f44729bfdfbb167fb45d2287feddd88b51b78c4ab7cf08c7947
 
 build:
   noarch: python
