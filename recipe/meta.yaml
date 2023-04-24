@@ -1,4 +1,3 @@
-{% set pytest_args = "python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail" %}
 {% set version = "0.10.0" %}
 {% set pytest_args = "python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail" %}
 
@@ -20,14 +19,15 @@ build:
 requirements:
   host:
     - hatch-vcs >=0.3
-    - hatchling >=1.12.2
+    - hatchling >=1.14
     - pip
     - python >=3.7
   run:
     - python >=3.7
-    - packaging >=23
-    - tomlkit >=0.11.6
-    - typing_extensions >=4.4
+    - natsort >=8.3.1
+    - packaging >=23.1
+    - tomlkit >=0.11.7
+    - typing_extensions >=4.5
 
 test:
   source_files:
@@ -36,11 +36,13 @@ test:
     - pyproject_fmt
   commands:
     - pip check
+    - mypy -p pyproject_fmt
     - pyproject-fmt --help
     - {{ pytest_args }} --cov-fail-under=99  # [not win]
     # fails with `FileNotFoundError``
     - {{ pytest_args }} -k "not test_help_invocation_as_script"  # [win]
   requires:
+    - mypy
     - pip
     - pytest >=7.2
     - pytest-cov >=4
