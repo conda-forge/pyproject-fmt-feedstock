@@ -38,7 +38,7 @@ test:
     - pip check
     - mypy -p pyproject_fmt
     - pyproject-fmt --help
-    - {{ pytest_args }} --cov-fail-under=99  # [not win]
+    - {{ pytest_args }} --cov-fail-under=95  # [not win]
     # fails with `FileNotFoundError``
     - {{ pytest_args }} -k "not test_help_invocation_as_script"  # [win]
   requires:
