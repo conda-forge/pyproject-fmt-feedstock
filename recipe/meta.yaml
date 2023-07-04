@@ -1,6 +1,5 @@
 {% set pytest_args = "python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k \"not classifier_gt_tox\"" %}
-{% set pytest_args = "python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k \"not classifier_gt_tox\"" %}
-{% set version = "0.12.1" %}
+{% set version = "0.13.0" %}
 
 package:
   name: pyproject-fmt
@@ -8,11 +7,11 @@ package:
 
 source:
   url: https://pypi.io/packages/source/p/pyproject-fmt/pyproject_fmt-{{ version }}.tar.gz
-  sha256: 01cd68477e87640944ece982d7bd1e14d006576041c8a8a65d4392660693bec2
+  sha256: aaad7398fe810c9087b33c1cc74d49b51a746bb05e9999371719b577139d0c49
 
 build:
   noarch: python
-  script: {{ PYTHON }} -m pip install . -vv --no-deps
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 0
   entry_points:
     - pyproject-fmt = pyproject_fmt.__main__:run
@@ -20,7 +19,7 @@ build:
 requirements:
   host:
     - hatch-vcs >=0.3
-    - hatchling >=1.14.1
+    - hatchling >=1.17.1
     - pip
     - python >=3.7
   run:
@@ -28,7 +27,7 @@ requirements:
     - natsort >=8.3.1
     - packaging >=23.1
     - tomlkit >=0.11.8
-    - typing_extensions >=4.5
+    - typing_extensions >=4.6.3
 
 test:
   source_files:
