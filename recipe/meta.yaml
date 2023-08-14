@@ -1,5 +1,6 @@
-{% set pytest_args = "python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k \"not classifier_gt_tox\"" %}
-{% set version = "0.13.0" %}
+{% set version = "0.13.1" %}
+
+{% set pytest_args = 'python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k "not classifier_gt_tox"' %}
 
 package:
   name: pyproject-fmt
@@ -7,7 +8,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/p/pyproject-fmt/pyproject_fmt-{{ version }}.tar.gz
-  sha256: aaad7398fe810c9087b33c1cc74d49b51a746bb05e9999371719b577139d0c49
+  sha256: ab56708a4bb3d8aa946abf9d5477b11441a23bcc574e5cf39fa758926e222805
 
 build:
   noarch: python
@@ -24,10 +25,10 @@ requirements:
     - python >=3.7
   run:
     - python >=3.7
-    - natsort >=8.3.1
+    - natsort >=8.4
     - packaging >=23.1
     - tomlkit >=0.11.8
-    - typing_extensions >=4.6.3
+    - typing_extensions >=4.7.1
 
 test:
   source_files:
@@ -36,17 +37,15 @@ test:
     - pyproject_fmt
   commands:
     - pip check
-    - mypy -p pyproject_fmt
     - pyproject-fmt --help
     - {{ pytest_args }} --cov-fail-under=92  # [not win]
     # fails with `FileNotFoundError``
     - {{ pytest_args }} -k "not test_help_invocation_as_script"  # [win]
   requires:
-    - mypy
     - pip
-    - pytest >=7.2
+    - pytest >=7.4
     - pytest-cov >=4
-    - pytest-mock >=3.10
+    - pytest-mock >=3.11
 
 about:
   home: https://pypi.org/project/pyproject-fmt
