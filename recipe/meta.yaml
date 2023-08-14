@@ -1,6 +1,6 @@
-{% set pytest_args = "python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k \"not classifier_gt_tox\"" %}
-{% set pytest_args = "python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k \"not classifier_gt_tox\"" %}
 {% set version = "0.13.1" %}
+
+{% set pytest_args = 'python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k "not classifier_gt_tox"' %}
 
 package:
   name: pyproject-fmt
@@ -25,10 +25,10 @@ requirements:
     - python >=3.7
   run:
     - python >=3.7
-    - natsort >=8.3.1
+    - natsort >=8.4
     - packaging >=23.1
     - tomlkit >=0.11.8
-    - typing_extensions >=4.6.3
+    - typing_extensions >=4.7.1
 
 test:
   source_files:
@@ -45,9 +45,9 @@ test:
   requires:
     - mypy
     - pip
-    - pytest >=7.2
+    - pytest >=7.4
     - pytest-cov >=4
-    - pytest-mock >=3.10
+    - pytest-mock >=3.11
 
 about:
   home: https://pypi.org/project/pyproject-fmt
