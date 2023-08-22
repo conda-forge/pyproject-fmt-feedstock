@@ -1,6 +1,4 @@
-{% set pytest_args = "python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k \"not classifier_gt_tox\"" %}
 {% set version = "1.0.0" %}
-
 {% set pytest_args = 'python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k "not classifier_gt_tox"' %}
 
 package:
@@ -21,14 +19,14 @@ build:
 requirements:
   host:
     - hatch-vcs >=0.3
-    - hatchling >=1.17.1
+    - hatchling >=1.18
     - pip
-    - python >=3.7
+    - python >=3.8
   run:
-    - python >=3.7
+    - python >=3.8
     - natsort >=8.4
     - packaging >=23.1
-    - tomlkit >=0.11.8
+    - tomlkit >=0.12.1
     - typing_extensions >=4.7.1
 
 test:
