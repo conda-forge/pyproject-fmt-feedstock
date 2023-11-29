@@ -1,4 +1,5 @@
-{% set version = "1.5.1" %}
+{% set pytest_args = "python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k \"not classifier_gt_tox\"" %}
+{% set version = "1.5.2" %}
 
 package:
   name: pyproject-fmt
@@ -6,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/p/pyproject-fmt/pyproject_fmt-{{ version }}.tar.gz
-  sha256: 0f3f11974888a3006f959b59eb41fa7b83434393fb9e66f34c1d2bfa03d8c444
+  sha256: 2e43dd7c9554991fdfa902751bc5112b0f810832f5900e91c28becf92e8d64bd
 
 build:
   noarch: python
