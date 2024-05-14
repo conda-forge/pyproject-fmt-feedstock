@@ -1,5 +1,5 @@
-{% set pytest_args = "python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k \"not classifier_gt_tox\"" %}
 {% set version = "2.0.4" %}
+{% set pytest_args = 'python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k "not classifier_gt_tox"' %}
 
 package:
   name: pyproject-fmt
@@ -10,9 +10,9 @@ source:
   sha256: 60164d814bc079157f009653f4d69e5c9c8d9bffdd7c716d698f82e8fcd0bb9c
 
 build:
+  number: 0
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 0
   entry_points:
     - pyproject-fmt = pyproject_fmt.__main__:run
 
@@ -23,10 +23,10 @@ requirements:
     - pip
     - python >=3.8
   run:
-    - pyproject-fmt-rust ==1.0.4
+    - pyproject-fmt-rust ==1.0.6
     - python >=3.8
+    - tomli >=2.0.1
 test:
-  {% set pytest_args = 'python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k "not classifier_gt_tox"' %}
   source_files:
     - tests
   imports:
@@ -34,8 +34,8 @@ test:
   commands:
     - pip check
     - pyproject-fmt --help
-    - {{ pytest_args }} --cov-fail-under=92  # [not win]
-    # fails with `FileNotFoundError``
+    - {{ pytest_args }} --cov-fail-under=92  # [unix]
+    # fails with `FileNotFoundError`
     - {{ pytest_args }} -k "not test_help_invocation_as_script"  # [win]
   requires:
     - pip
