@@ -1,7 +1,7 @@
-{% set pytest_args = "python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k \"not classifier_gt_tox\"" %}
-{% set pytest_args = "python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k \"not classifier_gt_tox\"" %}
 {% set version = "2.3.0" %}
-{% set pytest_args = 'python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k "not classifier_gt_tox"' %}
+
+# the `if` avoids bot dupes
+{% if 1 %}{% set pytest_args = 'python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k "not classifier_gt_tox"' %}{% endif %}
 
 package:
   name: pyproject-fmt
@@ -23,10 +23,10 @@ requirements:
     - hatch-vcs >=0.4
     - hatchling >=1.25
     - pip
-    - python >=3.8
+    - python >=3.9
   run:
-    - pyproject-fmt-rust ==1.1.6
-    - python >=3.8
+    - pyproject-fmt-rust ==1.2
+    - python >=3.9
     - tomli >=2.0.1
 test:
   source_files:
