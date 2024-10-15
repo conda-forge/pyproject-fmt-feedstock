@@ -1,4 +1,4 @@
-{% set version = "2.3.0" %}
+{% set version = "2.3.1" %}
 
 # the `if` avoids bot dupes
 {% if 1 %}{% set pytest_args = 'python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k "not classifier_gt_tox"' %}{% endif %}
@@ -9,7 +9,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/p/pyproject-fmt/pyproject_fmt-{{ version }}.tar.gz
-  sha256: b4fd2a1b5f8a547e30f3879015bd6279c1b7512227750b5fdbd488691b553f1e
+  sha256: e9b7135ae6194b671d807abd5247d80d21f93cc1b70c5d11fb45ad2fb79e83aa
 
 build:
   number: 0
@@ -25,7 +25,7 @@ requirements:
     - pip
     - python >=3.9
   run:
-    - pyproject-fmt-rust ==1.2
+    - pyproject-fmt-rust ==1.2.1
     - python >=3.9
     - tomli >=2.0.1
 test:
