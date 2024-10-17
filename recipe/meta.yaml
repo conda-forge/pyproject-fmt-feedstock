@@ -13,21 +13,28 @@ source:
 
 build:
   number: 0
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  script:
+    - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+    - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
   entry_points:
     - pyproject-fmt = pyproject_fmt.__main__:run
 
 requirements:
+  build:
+    - python                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+    - maturin >=1.7.1                        # [build_platform != target_platform]
+    - {{ compiler("c") }}
+    - {{ compiler("rust") }}
+    - {{ stdlib("c") }}
+    - cargo-bundle-licenses
   host:
-    - hatch-vcs >=0.4
-    - hatchling >=1.25
+    - maturin >=1.7.1
     - pip
-    - python >=3.9
+    - python
   run:
-    - pyproject-fmt-rust ==1.2.1
-    - python >=3.9
-    - tomli >=2.0.1
+    - python
+
 test:
   source_files:
     - tests
