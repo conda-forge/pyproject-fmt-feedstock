@@ -37,12 +37,13 @@ requirements:
 
 test:
   source_files:
-    - tests
+    - pyproject-fmt/tests
   imports:
     - pyproject_fmt
   commands:
     - pip check
     - pyproject-fmt --help
+    - cd pyproject-fmt
     - {{ pytest_args }} --cov-fail-under=92                      # [unix]
     # fails with `FileNotFoundError`
     - {{ pytest_args }} -k "not test_help_invocation_as_script"  # [win]
