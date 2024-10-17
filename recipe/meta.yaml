@@ -43,7 +43,7 @@ test:
   commands:
     - pip check
     - pyproject-fmt --help
-    - {{ pytest_args }} --cov-fail-under=92  # [unix]
+    - {{ pytest_args }} --cov-fail-under=92                      # [unix]
     # fails with `FileNotFoundError`
     - {{ pytest_args }} -k "not test_help_invocation_as_script"  # [win]
   requires:
@@ -57,10 +57,8 @@ about:
   summary: Format your pyproject.toml file
   license: MIT
   license_file: LICENSE.txt
-  doc_url: https://pyproject-fmt.readthedocs.io
-  dev_url: https://github.com/tox-dev/pyproject-fmt
-  description: |
-    Apply a consistent format to your `pyproject.toml` file with comment support.
+  dev_url: https://github.com/tox-dev/toml-fmt
+  description: Format your pyproject.toml file
 
 extra:
   recipe-maintainers:
