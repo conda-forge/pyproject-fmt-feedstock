@@ -1,7 +1,10 @@
 {% set version = "2.4.2" %}
 
 # the `if` avoids bot dupes
-{% if 1 %}{% set pytest_args = 'python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k "not classifier_gt_tox"' %}{% endif %}
+{% if 1 %}
+{% set pytest_args = 'python -m pytest -vv --cov=pyproject_fmt --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail -k "not classifier_gt_tox"' %}
+{% set win_skips = 'help_invocation_as_script or cli_pyproject_toml_not_file' %}
+{% endif %}
 
 package:
   name: pyproject-fmt
@@ -44,9 +47,8 @@ test:
     - pip check
     - pyproject-fmt --help
     - cd pyproject-fmt
-    - {{ pytest_args }} --cov-fail-under=92                      # [unix]
-    # fails with `FileNotFoundError`
-    - {{ pytest_args }} -k "not test_help_invocation_as_script"  # [win]
+    - {{ pytest_args }} --cov-fail-under=92         # [unix]
+    - {{ pytest_args }} -k "not ({{ win_skips }})"  # [win]
   requires:
     - pip
     - pytest >=8.2
