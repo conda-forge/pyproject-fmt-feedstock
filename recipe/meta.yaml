@@ -37,6 +37,7 @@ requirements:
     - python
   run:
     - python
+    - tomli >=2.0.2
 
 test:
   source_files:
