@@ -11,8 +11,6 @@ Summary: Format your pyproject.toml file
 
 Development: https://github.com/tox-dev/toml-fmt
 
-Format your pyproject.toml file
-
 Current build status
 ====================
 
