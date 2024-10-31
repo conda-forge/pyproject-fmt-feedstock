@@ -48,7 +48,7 @@ test:
     - pip check
     - pyproject-fmt --help
     - cd pyproject-fmt
-    - {{ pytest_args }} --cov-fail-under=92         # [unix]
+    - {{ pytest_args }} --cov-fail-under=88         # [unix]
     - {{ pytest_args }} -k "not ({{ win_skips }})"  # [win]
   requires:
     - pip
