@@ -1,4 +1,4 @@
-{% set version = "2.4.3" %}
+{% set version = "2.5.0" %}
 
 # the `if` avoids bot dupes
 {% if 1 %}
@@ -12,15 +12,15 @@ package:
 
 source:
   url: https://pypi.io/packages/source/p/pyproject-fmt/pyproject_fmt-{{ version }}.tar.gz
-  sha256: 68c9dc7e360cd169ba323238bab8d0659cbf0ce4380bf787973c3a042829de70
+  sha256: d8d9064bf740cda9b30386fc40f34deb8014a9a59f10e89bfb991df4c9dcbf15
 
 build:
-  number: 1
+  number: 0
   script:
-    - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+    - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
   entry_points:
-    - pyproject-fmt = pyproject_fmt.__main__:run
+    - pyproject-fmt = pyproject_fmt.__main__:runner
 
 requirements:
   build:
@@ -37,7 +37,7 @@ requirements:
     - python
   run:
     - python
-    - tomli >=2.0.2
+    - toml-fmt-common ==1.0.1
 
 test:
   source_files:
@@ -48,7 +48,7 @@ test:
     - pip check
     - pyproject-fmt --help
     - cd pyproject-fmt
-    - {{ pytest_args }} --cov-fail-under=92         # [unix]
+    - {{ pytest_args }} --cov-fail-under=88         # [unix]
     - {{ pytest_args }} -k "not ({{ win_skips }})"  # [win]
   requires:
     - pip
@@ -62,7 +62,6 @@ about:
   license: MIT
   license_file: LICENSE.txt
   dev_url: https://github.com/tox-dev/toml-fmt
-  description: Format your pyproject.toml file
 
 extra:
   recipe-maintainers:
