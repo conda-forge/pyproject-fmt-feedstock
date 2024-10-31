@@ -17,10 +17,10 @@ source:
 build:
   number: 0
   script:
-    - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+    - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-update-check
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
   entry_points:
-    - pyproject-fmt = pyproject_fmt.__main__:run
+    - pyproject-fmt = pyproject_fmt.__main__:runner
 
 requirements:
   build:
@@ -37,7 +37,7 @@ requirements:
     - python
   run:
     - python
-    - tomli >=2.0.2
+    - toml-fmt-common ==1.0.1
 
 test:
   source_files:
@@ -62,7 +62,6 @@ about:
   license: MIT
   license_file: LICENSE.txt
   dev_url: https://github.com/tox-dev/toml-fmt
-  description: Format your pyproject.toml file
 
 extra:
   recipe-maintainers:
