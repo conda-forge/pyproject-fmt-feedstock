@@ -3,6 +3,7 @@ schema_version: 1
 
 context:
   version: 2.5.1
+  maturin_version: ">=1.7.1"
 
 package:
   name: pyproject-fmt
@@ -14,6 +15,8 @@ source:
 
 build:
   number: 0
+  # only build for the minimal python version
+  skip: not (match(python, python_min) and is_abi3 == 'true')
   script:
     - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
@@ -31,11 +34,12 @@ requirements:
       then:
         - python
         - cross-python_${{ target_platform }}
-        -  maturin >=1.7.1
+        - maturin ${{ maturin_version }}
   host:
-    - maturin >=1.7.1
+    - maturin ${{ maturin_version }}
     - pip
     - python
+    - python-abi3
   run:
     - python
     - toml-fmt-common ==1.0.1
@@ -43,6 +47,7 @@ requirements:
 tests:
   - python:
       pip_check: true
+      python_version: ${{ python_min }}.*
       imports: pyproject_fmt
   - files:
       recipe:
@@ -61,7 +66,9 @@ tests:
 about:
   summary: Format your pyproject.toml file
   license: MIT
-  license_file: LICENSE.txt
+  license_file:
+    - LICENSE.txt
+    - THIRDPARTY.yml
   homepage: https://pypi.org/project/pyproject-fmt
   repository: https://github.com/tox-dev/toml-fmt
 
