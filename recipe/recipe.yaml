@@ -59,6 +59,7 @@ tests:
         - pytest >=8.2
         - pytest-cov >=5
         - pytest-mock >=3.14
+        - python !=${{ python_min }}.*
     script:
       - pyproject-fmt --help
       - python run_test.py
