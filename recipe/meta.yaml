@@ -1,4 +1,4 @@
-{% set version = "2.5.0" %}
+{% set version = "2.5.1" %}
 
 # the `if` avoids bot dupes
 {% if 1 %}
@@ -11,8 +11,8 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/p/pyproject-fmt/pyproject_fmt-{{ version }}.tar.gz
-  sha256: d8d9064bf740cda9b30386fc40f34deb8014a9a59f10e89bfb991df4c9dcbf15
+  url: https://pypi.org/packages/source/p/pyproject-fmt/pyproject_fmt-{{ version }}.tar.gz
+  sha256: c7dfe1f62cc91fdf7ec73043b12c0df03a9a828ce09067fa4bb522fea5b24269
 
 build:
   number: 0
