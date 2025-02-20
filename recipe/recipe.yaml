@@ -23,7 +23,7 @@ build:
   python:
     entry_points:
       - pyproject-fmt = pyproject_fmt.__main__:runner
-
+    version_independent: true
 requirements:
   build:
     - ${{ compiler("c") }}
