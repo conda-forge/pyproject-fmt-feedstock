@@ -3,7 +3,7 @@ schema_version: 1
 
 context:
   version: 2.5.1
-  maturin_version: ">=1.7.1"
+  maturin_min: 1.7.1
 
 package:
   name: pyproject-fmt
@@ -14,7 +14,7 @@ source:
   sha256: c7dfe1f62cc91fdf7ec73043b12c0df03a9a828ce09067fa4bb522fea5b24269
 
 build:
-  number: 0
+  number: 1
   # only build for the minimal python version
   skip: not (match(python, python_min ~ ".*") and is_abi3 == 'true')
   script:
@@ -34,9 +34,9 @@ requirements:
       then:
         - python
         - cross-python_${{ target_platform }}
-        - maturin ${{ maturin_version }}
+        - maturin >=${{ maturin_min }}
   host:
-    - maturin ${{ maturin_version }}
+    - maturin >=${{ maturin_min }}
     - pip
     - python
     - python-abi3
