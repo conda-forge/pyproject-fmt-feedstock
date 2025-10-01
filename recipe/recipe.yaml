@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "2.6.0"
+  version: "2.7.0"
   maturin_min: "1.8.4"
 
 package:
@@ -11,10 +11,10 @@ package:
 
 source:
   url: https://pypi.org/packages/source/p/pyproject-fmt/pyproject_fmt-${{ version }}.tar.gz
-  sha256: 6640830f59f65d26aa953f5ce887d23b9359856a5d0e10d33c756b9676b229df
+  sha256: b5fd224608091bfdf025c4d700450f818d5009f0e63c00b7396bd3123697994b
 
 build:
-  number: 1
+  number: 0
   # only build for the minimal python version
   skip: not (match(python, python_min ~ ".*") and is_abi3)
   script:
