@@ -3,7 +3,7 @@ schema_version: 1
 
 context:
   version: "2.11.1"
-  maturin_min: "1.8.4"
+  maturin_min: "1.9.6"
 
 package:
   name: pyproject-fmt
@@ -42,7 +42,7 @@ requirements:
     - python-abi3
   run:
     - python
-    - toml-fmt-common ==1.0.1
+    - toml-fmt-common ==1.1
 
 tests:
   - python:
@@ -58,9 +58,9 @@ tests:
         - pyproject-fmt/tests/
     requirements:
       run:
-        - pytest >=8.2
-        - pytest-cov >=5
-        - pytest-mock >=3.14
+        - pytest >=8.4.2
+        - pytest-cov >=7
+        - pytest-mock >=3.15.1
         - python !=${{ python_min }}.*
     script:
       - pyproject-fmt --help
