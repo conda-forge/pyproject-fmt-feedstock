@@ -2,8 +2,8 @@
 schema_version: 1
 
 context:
-  version: "2.11.0"
-  maturin_min: "1.8.4"
+  version: "2.11.1"
+  maturin_min: "1.9.6"
 
 package:
   name: pyproject-fmt
@@ -11,7 +11,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/p/pyproject-fmt/pyproject_fmt-${{ version }}.tar.gz
-  sha256: 24d2370fccbc29a7d696479ab0792ff81b188accabf399e0b35fd3c433780d1f
+  sha256: 86f4ebc71d658b848bd14da5f2d2f156a238687e5c9adc0e787ecbf925fd24b1
 
 build:
   number: 0
@@ -42,7 +42,7 @@ requirements:
     - python-abi3
   run:
     - python
-    - toml-fmt-common ==1.0.1
+    - toml-fmt-common ==1.1
 
 tests:
   - python:
@@ -58,9 +58,9 @@ tests:
         - pyproject-fmt/tests/
     requirements:
       run:
-        - pytest >=8.2
-        - pytest-cov >=5
-        - pytest-mock >=3.14
+        - pytest >=8.4.2
+        - pytest-cov >=7
+        - pytest-mock >=3.15.1
         - python !=${{ python_min }}.*
     script:
       - pyproject-fmt --help
