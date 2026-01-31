@@ -36,6 +36,9 @@ requirements:
         - cross-python_${{ target_platform }}
         - maturin >=${{ maturin_min }}
         - python
+        - if: is_abi3
+          then:
+            - python-abi3
   host:
     - maturin >=${{ maturin_min }}
     - pip
@@ -50,17 +53,16 @@ requirements:
 tests:
   - if: is_abi3
     then:
-      python:
-        imports: pyproject_fmt
-        pip_check: true
-        python_version:
-          - ${{ python_min }}.*
-          - ${{ python_check_max }}.*
-  - if: not is_abi3
-    then:
-      python:
-        imports: pyproject_fmt
-        pip_check: true
+      - python:
+          imports: pyproject_fmt
+          pip_check: true
+          python_version:
+            - ${{ python_min }}.*
+            - ${{ python_check_max }}.*
+    else:
+      - python:
+          imports: pyproject_fmt
+          pip_check: true
   - files:
       recipe:
         - run_test.py
