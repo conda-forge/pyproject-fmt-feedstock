@@ -3,6 +3,7 @@ from subprocess import call
 import site
 from pathlib import Path
 from typing import Any
+from argparse import ArgumentParser
 
 try:
     __import__("abi3audit")
@@ -13,6 +14,8 @@ except ImportError:
 
 WIN = sys.platform == "win32"
 SP_DIR = Path(site.getsitepackages()[-1])
+PKG_SP_DIR = SP_DIR / "pyproject_fmt"
+ABI3_EXT = "*.pyd" if WIN else "*.abi3.so"
 
 FAIL_UNDER = "81"
 COV = ["coverage"]
@@ -37,25 +40,31 @@ K = ["-k", f"not ({SKIP_OR})"]
 
 def do(*args: Any) -> int:
     """Condition and print arguemnts, return rc."""
-    args = [map(str, args)]
-    print(">>>", *args, flush=True)
+    args = [*map(str, args)]
+    print(">>>", " \\\n\t".join(args), flush=True)
     return call(args)
 
 
 def check_abi(python_min: str) -> int:
-    """Maybe run abi3audit."""
+    """Maybe run abi3audit on all ``.pyd/.abi3.so``."""
     if not IS_ABI3:
-        return True
-    ext = "pyd" if WIN else "abi3.so"
-    bin = SP_DIR / f"pyproject_fmt/_lib.{ext}"
-    return do(["abi3audit", bin, "-s", "-v", f"--assume-minimum-abi3={python_min}"])
+        print("... abi3audit not available, skipping")
+        return 0
+    bins = sorted(PKG_SP_DIR.rglob(ABI3_EXT))
+    if not bins:
+        print(f"!!! no `{ABI3_EXT}` found in: {PKG_SP_DIR}")
+        return 1
+    return do("abi3audit", "-s", "-v", "--assume-minimum-abi3", python_min, *bins)
 
 
 if __name__ == "__main__":
+    parser = ArgumentParser()
+    parser.add_argument("--python-min")
+    ns = parser.parse_args()
     sys.exit(
-        check_abi(sys.argv[1])
+        check_abi(python_min=ns.python_min)
         # run the tests
-        or do([*COV, *RUN, *PYTEST, *K])
+        or do(*COV, *RUN, *PYTEST, *K)
         # maybe run coverage
-        or do([*COV, *REPORT])
+        or do(*COV, *REPORT)
     )
