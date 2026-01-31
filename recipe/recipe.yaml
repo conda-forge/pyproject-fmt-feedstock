@@ -3,7 +3,8 @@ schema_version: 1
 
 context:
   version: "2.12.0"
-  maturin_min: "1.9.6"
+  maturin_min: "1.11.5"
+  python_check_max: "3.14"
 
 package:
   name: pyproject-fmt
@@ -15,15 +16,15 @@ source:
 
 build:
   number: 0
-  # only build for the minimal python version
-  skip: not (match(python, python_min ~ ".*") and is_abi3)
+  skip: is_abi3 and not is_python_min
   script:
     - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
   python:
     entry_points:
       - pyproject-fmt = pyproject_fmt.__main__:runner
-    version_independent: true
+    version_independent: ${{ is_abi3 }}
+
 requirements:
   build:
     - ${{ compiler("c") }}
@@ -32,25 +33,34 @@ requirements:
     - cargo-bundle-licenses
     - if: build_platform != target_platform
       then:
-        - python
         - cross-python_${{ target_platform }}
         - maturin >=${{ maturin_min }}
+        - python
   host:
     - maturin >=${{ maturin_min }}
     - pip
     - python
-    - python-abi3
+    - if: is_abi3
+      then:
+        - python-abi3
   run:
     - python
-    - toml-fmt-common ==1.1
+    - toml-fmt-common ==1.2
 
 tests:
-  - python:
-      imports: pyproject_fmt
-      pip_check: true
-      python_version:
-        - ${{ python_min }}.*
-        - 3.13.*
+  - if: is_abi3
+    then:
+      python:
+        imports: pyproject_fmt
+        pip_check: true
+        python_version:
+          - ${{ python_min }}.*
+          - ${{ python_check_max }}.*
+  - if: not is_abi3
+    then:
+      python:
+        imports: pyproject_fmt
+        pip_check: true
   - files:
       recipe:
         - run_test.py
@@ -61,10 +71,13 @@ tests:
         - pytest >=8.4.2
         - pytest-cov >=7
         - pytest-mock >=3.15.1
-        - python !=${{ python_min }}.*
+        - if: is_abi3
+          then:
+            - abi3audit
+            - python ${{ python_min }}.*
     script:
       - pyproject-fmt --help
-      - python run_test.py
+      - python run_test.py --python-min=${{ python_min }}
 
 about:
   summary: Format your pyproject.toml file
