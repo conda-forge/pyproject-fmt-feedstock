@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "2.15.2"
+  version: "2.15.3"
   maturin_min: "1.11.5"
   python_check_max: "3.14"
 
@@ -12,7 +12,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/p/pyproject-fmt/pyproject_fmt-${{ version }}.tar.gz
-  sha256: 10b22effb4c1ac12033d41b089bee60aded60f2241e0b95f2794917fc7d5dac8
+  sha256: 276270e6c6aa21989447e57e1415baa10d282924d1e55168d0b2cc833303217b
 
 build:
   number: 0
