@@ -2,8 +2,8 @@
 schema_version: 1
 
 context:
-  version: "2.16.2"
-  maturin_min: "1.12.2"
+  version: "2.17.0"
+  maturin_min: "1.12.5"
   python_check_max: "3.14"
 
 package:
@@ -12,7 +12,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/p/pyproject-fmt/pyproject_fmt-${{ version }}.tar.gz
-  sha256: c4e1a3dbb2940df420535a85be992a28a28a51f08a5618c82bd33bfe85bc0c77
+  sha256: 8f00ab90ec7328a7f288fa90f94ba41c2ba3fe521386b5fce20a064b228848be
 
 build:
   number: 0
@@ -48,7 +48,12 @@ requirements:
         - python-abi3
   run:
     - python
-    - toml-fmt-common ==1.2
+    - toml-fmt-common
+  ignore_run_exports:
+    from_package:
+      - if: build_platform != target_platform
+        then:
+          - cross-python_${{ target_platform }}
 
 tests:
   - if: is_abi3
