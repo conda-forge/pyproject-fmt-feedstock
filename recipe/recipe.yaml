@@ -3,7 +3,7 @@ schema_version: 1
 
 context:
   version: "2.20.0"
-  maturin_min: "1.12.5"
+  maturin_min: "1.12.6"
   python_check_max: "3.14"
 
 package:
