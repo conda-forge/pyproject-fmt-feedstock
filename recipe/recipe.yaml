@@ -31,14 +31,6 @@ requirements:
     - ${{ compiler("rust") }}
     - ${{ stdlib("c") }}
     - cargo-bundle-licenses
-    - if: build_platform != target_platform
-      then:
-        - cross-python_${{ target_platform }}
-        - maturin >=${{ maturin_min }}
-        - python
-        - if: is_abi3
-          then:
-            - python-abi3
   host:
     - maturin >=${{ maturin_min }}
     - pip
@@ -49,11 +41,6 @@ requirements:
   run:
     - python
     - toml-fmt-common
-  ignore_run_exports:
-    from_package:
-      - if: build_platform != target_platform
-        then:
-          - cross-python_${{ target_platform }}
 
 tests:
   - if: is_abi3
