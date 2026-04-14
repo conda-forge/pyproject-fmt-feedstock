@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "2.21.0"
+  version: "2.21.1"
   maturin_min: "1.12.6"
   python_check_max: "3.14"
 
@@ -12,7 +12,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/p/pyproject-fmt/pyproject_fmt-${{ version }}.tar.gz
-  sha256: c3f88e6781377cba1ee6400095b5c05fb997238487ed498a7f9f3b479a6ee825
+  sha256: 28221e42c4eca81a73ceacef519f3bcc0eec390d632f2fd1c14ba71d4f6362b7
 
 build:
   number: 0
@@ -31,14 +31,6 @@ requirements:
     - ${{ compiler("rust") }}
     - ${{ stdlib("c") }}
     - cargo-bundle-licenses
-    - if: build_platform != target_platform
-      then:
-        - cross-python_${{ target_platform }}
-        - maturin >=${{ maturin_min }}
-        - python
-        - if: is_abi3
-          then:
-            - python-abi3
   host:
     - maturin >=${{ maturin_min }}
     - pip
@@ -49,11 +41,6 @@ requirements:
   run:
     - python
     - toml-fmt-common
-  ignore_run_exports:
-    from_package:
-      - if: build_platform != target_platform
-        then:
-          - cross-python_${{ target_platform }}
 
 tests:
   - if: is_abi3
