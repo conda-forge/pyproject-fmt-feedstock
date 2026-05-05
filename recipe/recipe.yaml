@@ -3,7 +3,6 @@ schema_version: 1
 
 context:
   version: "2.21.2"
-  maturin_min: "1.12.6"
   python_check_max: "3.14"
 
 package:
@@ -32,7 +31,7 @@ requirements:
     - ${{ stdlib("c") }}
     - cargo-bundle-licenses
   host:
-    - maturin >=${{ maturin_min }}
+    - maturin >=1.13.1
     - pip
     - python
     - if: is_abi3
