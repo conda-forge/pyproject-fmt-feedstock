@@ -42,7 +42,7 @@ K = ["-k", f"not ({SKIP_OR})"]
 
 def do(*args: Any) -> int:
     """Condition and print arguemnts, return rc."""
-    args = [*map(str, args)]
+    args = tuple(map(str, args))
     print(">>>", " \\\n\t".join(args), flush=True)
     return call(args)
 
