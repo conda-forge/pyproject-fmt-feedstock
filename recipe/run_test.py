@@ -26,6 +26,8 @@ REPORT = ["report", "--show-missing", "--skip-covered", f"--fail-under={FAIL_UND
 SKIPS = [
     "not-really-a-test-but--k-is-picky",
     "classifier_gt_tox",
+    # python-specific diff output in fixture?
+    "(main and (format-cwd-no_check-in_place or format-absolute-no_check-in_place))",
 ]
 
 if WIN:

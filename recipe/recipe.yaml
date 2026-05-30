@@ -31,7 +31,7 @@ requirements:
     - ${{ stdlib("c") }}
     - cargo-bundle-licenses
   host:
-    - maturin >=1.13.1
+    - maturin >=1.13.3
     - pip
     - python
     - if: is_abi3
@@ -67,7 +67,7 @@ tests:
         - if: is_abi3
           then:
             - abi3audit
-            - python ${{ python_min }}.*
+            - python !=${{ python_min }}.*
     script:
       - pyproject-fmt --help
       - python run_test.py --python-min=${{ python_min }}
