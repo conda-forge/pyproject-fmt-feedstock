@@ -45,7 +45,7 @@ requirements:
     - cargo-auditable
     - cargo-bundle-licenses
   host:
-    - maturin >=1.13.3
+    - maturin >=1.14
     - pip
     - python
     - if: is_abi3
