@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "2.24.1"
+  version: "2.25.0"
   python_check_max: "3.14"
 
 package:
@@ -10,8 +10,8 @@ package:
   version: ${{ version }}
 
 source:
-  url: https://files.pythonhosted.org/packages/5e/a8/8b63cda9193328126ff32a6e24a734fc9f1cc95bcdafc22abca550d1b158/pyproject_fmt-${{ version }}.tar.gz
-  sha256: 30b00e7d596506da0e041e6cc999d6fece77dca3729cbeff8399c398d2b1b50b
+  url: https://files.pythonhosted.org/packages/ee/32/884b60601ef40f0f89ff35ff39b4ac2af874f09ecb5d687eb74d3ce335f9/pyproject_fmt-${{ version }}.tar.gz
+  sha256: 4a79d56e7d7d725174900092093ee33a659ad1aa1dc5db768f8e020e3783a8d1
 
 build:
   number: 0
@@ -45,7 +45,7 @@ requirements:
     - cargo-auditable
     - cargo-bundle-licenses
   host:
-    - maturin >=1.13.3
+    - maturin >=1.14
     - pip
     - python
     - if: is_abi3
