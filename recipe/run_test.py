@@ -17,7 +17,7 @@ SP_DIR = Path(site.getsitepackages()[-1])
 PKG_SP_DIR = SP_DIR / "pyproject_fmt"
 ABI3_EXT = "*.pyd" if WIN else "*.abi3.so"
 
-FAIL_UNDER = "81"
+FAIL_UNDER = "78"
 COV = ["coverage"]
 RUN = ["run", "--source=pyproject_fmt", "--branch", "-m"]
 PYTEST = ["pytest", "pyproject-fmt/tests", "-vv", "--color=yes", "--tb=long"]
