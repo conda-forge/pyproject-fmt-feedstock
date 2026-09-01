@@ -4,13 +4,14 @@ schema_version: 1
 context:
   version: "2.29.2"
   python_check_max: "3.14"
+  unlink_tests: tests/test_build_backend.py
 
 package:
   name: pyproject-fmt
   version: ${{ version }}
 
 source:
-  url: https://files.pythonhosted.org/packages/10/f0/e0aa059870fb02964b244a0fab544129fa1a6b11555418b24e2b07492cd4/pyproject_fmt-${{ version }}.tar.gz
+  url: https://files.pythonhosted.org/packages/source/p/pyproject-fmt/pyproject_fmt-${{ version }}.tar.gz
   sha256: 6f7e1de89a5ee04dda0f3428653fcd967478230e1141ffc18e40ad72b47e63bd
 
 build:
@@ -72,10 +73,7 @@ tests:
       recipe:
         - run_test.py
       source:
-        - pyproject-fmt/build_backend.py
-        - pyproject-fmt/pyproject.toml
         - pyproject-fmt/tests/
-        - pyproject-fmt/tox.toml
     requirements:
       run:
         - pytest >=8.4.2
@@ -87,6 +85,7 @@ tests:
             - python !=${{ python_min }}.*
     script:
       - pyproject-fmt --help
+      - python -c "import os; [os.unlink(p) for p in '''${{ unlink_tests }}'''.split()]"
       - python run_test.py --python-min=${{ python_min }}
 
 about:
