@@ -4,7 +4,7 @@ schema_version: 1
 context:
   version: "2.29.2"
   python_check_max: "3.14"
-  unlink_tests: tests/test_build_backend.py
+  unlink_tests: test_build_backend.py
 
 package:
   name: pyproject-fmt
@@ -85,7 +85,7 @@ tests:
             - python !=${{ python_min }}.*
     script:
       - pyproject-fmt --help
-      - python -c "import os; [os.unlink(p) for p in '''${{ unlink_tests }}'''.split()]"
+      - python -c "import os; [os.unlink(f'pyproject-fmt/tests/{p}') for p in '''${{ unlink_tests }}'''.split()]"
       - python run_test.py --python-min=${{ python_min }}
 
 about:
