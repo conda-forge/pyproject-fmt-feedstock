@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "2.29.3"
+  version: "2.29.4"
   python_check_max: "3.14"
   unlink_tests: test_build_backend.py
 
@@ -12,7 +12,7 @@ package:
 
 source:
   url: https://files.pythonhosted.org/packages/source/p/pyproject-fmt/pyproject_fmt-${{ version }}.tar.gz
-  sha256: 6c4592eca84bd46734f9217528949e21ea48b037405f33ea4ec2c4b2d11ad2c5
+  sha256: fc1fdd0f5ab1b07ac6a4f4e0f30444a2d7c8f2965d2e574641d0bebc784f01b0
 
 build:
   number: 0
@@ -46,7 +46,7 @@ requirements:
     - cargo-auditable
     - cargo-bundle-licenses
   host:
-    - maturin >=1.14.1
+    - maturin >=1.15
     - pip
     - python
     - if: is_abi3
@@ -79,6 +79,7 @@ tests:
         - pytest >=8.4.2
         - pytest-cov >=7
         - pytest-mock >=3.15.1
+        - trove-classifiers >=2026.6.1.19
         - if: is_abi3
           then:
             - abi3audit
