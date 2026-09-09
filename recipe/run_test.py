@@ -37,6 +37,8 @@ if WIN:
     SKIPS += [
         "help_invocation_as_script",
         "cli_pyproject_toml_not_file",
+        # bad path (#93)
+        "(help_names_the_program and as-a-script)",
     ]
 
 SKIP_OR = " or ".join(SKIPS)
