@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "2.29.4"
+  version: "2.30.0"
   python_check_max: "3.14"
   unlink_tests: test_build_backend.py
 
@@ -12,7 +12,7 @@ package:
 
 source:
   url: https://files.pythonhosted.org/packages/source/p/pyproject-fmt/pyproject_fmt-${{ version }}.tar.gz
-  sha256: fc1fdd0f5ab1b07ac6a4f4e0f30444a2d7c8f2965d2e574641d0bebc784f01b0
+  sha256: 1cf1e2b7e3674102fbf5fd6667fb6cde094a144e2e88e4fab0f79a382f6fa060
 
 build:
   number: 0
