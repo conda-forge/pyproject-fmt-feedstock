@@ -66,7 +66,7 @@ tests:
   - package_contents:
       strict: true
       files:
-        - conda/test-files/pyproject-fmt/**
+        - etc/conda/test-files/pyproject-fmt/**
       site_packages:
         - pyproject_fmt/**
         - pyproject_fmt-${{ version }}.dist-info/**
@@ -98,12 +98,8 @@ tests:
     script:
       - pyproject-fmt --help
       - python -c "import os; [os.unlink(f'pyproject-fmt/tests/{p}') for p in '''${{ unlink_tests }}'''.split()]"
+      # also runs abi3audit, if available
       - python run_test.py --python-min=${{ python_min }}
-      - if: is_abi3
-        then:
-          - if: unix
-            then: abi3audit -s -v --assume-minimum-abi3 ${{ python_min }} "${SP_DIR}/pyproject_fmt/_lib.abi3.so"
-            else: abi3audit -s -v --assume-minimum-abi3 ${{ python_min }}  "%SP_DIR%\pyproject_fmt\_lib.pyd"
 
 about:
   summary: Format your pyproject.toml file
