@@ -69,9 +69,10 @@ if __name__ == "__main__":
     parser.add_argument("--python-min")
     ns = parser.parse_args()
     sys.exit(
-        check_abi(python_min=ns.python_min)
         # run the tests
-        or do(*COV, *RUN, *PYTEST, *K)
+        do(*COV, *RUN, *PYTEST, *K)
         # maybe run coverage
         or do(*COV, *REPORT)
+        # maybe check abi3
+        or check_abi(python_min=ns.python_min)
     )

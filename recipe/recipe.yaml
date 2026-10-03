@@ -2,8 +2,9 @@
 schema_version: 1
 
 context:
-  version: "2.29.4"
+  version: "2.30.0"
   python_check_max: "3.14"
+  cargo_wrapper: cargo-auditable-wrapper${{ ".sh" if unix else ".bat" }}
   unlink_tests: test_build_backend.py
 
 package:
@@ -12,31 +13,31 @@ package:
 
 source:
   url: https://files.pythonhosted.org/packages/source/p/pyproject-fmt/pyproject_fmt-${{ version }}.tar.gz
-  sha256: fc1fdd0f5ab1b07ac6a4f4e0f30444a2d7c8f2965d2e574641d0bebc784f01b0
+  sha256: 1cf1e2b7e3674102fbf5fd6667fb6cde094a144e2e88e4fab0f79a382f6fa060
 
 build:
   number: 0
   skip: is_abi3 and not is_python_min
+  python:
+    version_independent: ${{ is_abi3 }}
+    entry_points:
+      - pyproject-fmt = pyproject_fmt.__main__:runner
   script:
     env:
       CARGO_PROFILE_RELEASE_STRIP: symbols
       CARGO_PROFILE_RELEASE_LTO: fat
-      CARGO: cargo-auditable-wrapper${{ ".bat" if win }}
+      CARGO: ${{ cargo_wrapper }}
       PYTHONIOENCODING: utf-8
       PYTHONLEGACYTEXTENCODING: utf-8
     content:
       - if: win
         then:
-          - copy "%RECIPE_DIR%\cargo-auditable-wrapper.bat" "%BUILD_PREFIX%\Library\bin\cargo-auditable-wrapper.bat"
+          - copy "%RECIPE_DIR%\${{ cargo_wrapper }}" "%BUILD_PREFIX%\Library\bin\"
         else:
-          - cp "${RECIPE_DIR}/cargo-auditable-wrapper.sh" "${BUILD_PREFIX}/bin/cargo-auditable-wrapper"
-          - chmod 755 "${BUILD_PREFIX}/bin/cargo-auditable-wrapper"
-      - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check
+          - cp "${RECIPE_DIR}/${{ cargo_wrapper }}" "${BUILD_PREFIX}/bin/"
+          - chmod 755 "${BUILD_PREFIX}/bin/${{ cargo_wrapper }}"
+      - ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check --check-build-dependencies
       - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
-  python:
-    entry_points:
-      - pyproject-fmt = pyproject_fmt.__main__:runner
-    version_independent: ${{ is_abi3 }}
 
 requirements:
   build:
@@ -52,23 +53,40 @@ requirements:
     - if: is_abi3
       then:
         - python-abi3
+        - python ${{ python_min }}.*
   run:
     - python
     - toml-fmt-common
+    - if: is_abi3
+      then:
+        - python-abi3
+        - python >=${{ python_min }}
 
 tests:
-  - if: is_abi3
-    then:
-      - python:
-          imports: pyproject_fmt
-          pip_check: true
-          python_version:
+  - package_contents:
+      strict: true
+      bin:
+        - if: not is_abi3
+          then:
+            - pyproject-fmt
+      files:
+        - etc/conda/test-files/pyproject-fmt/**
+        - if: win and not is_abi3
+          then:
+            - Scripts/pyproject-fmt-script.py
+      site_packages:
+        - pyproject_fmt/**
+        - pyproject_fmt-${{ version }}.dist-info/**
+  - python:
+      imports: pyproject_fmt
+      pip_check: true
+      python_version:
+        - if: is_abi3
+          then:
             - ${{ python_min }}.*
             - ${{ python_check_max }}.*
-    else:
-      - python:
-          imports: pyproject_fmt
-          pip_check: true
+          else:
+            - "*"
   - files:
       recipe:
         - run_test.py
@@ -76,10 +94,10 @@ tests:
         - pyproject-fmt/tests/
     requirements:
       run:
-        - pytest >=8.4.2
-        - pytest-cov >=7
-        - pytest-mock >=3.15.1
-        - trove-classifiers >=2026.6.1.19
+        - pytest >=9.1.1
+        - pytest-cov >=7.1
+        - pytest-mock >=3.16
+        - trove-classifiers >=2026.9.21.13
         - if: is_abi3
           then:
             - abi3audit
@@ -87,6 +105,7 @@ tests:
     script:
       - pyproject-fmt --help
       - python -c "import os; [os.unlink(f'pyproject-fmt/tests/{p}') for p in '''${{ unlink_tests }}'''.split()]"
+      # also runs abi3audit, if available
       - python run_test.py --python-min=${{ python_min }}
 
 about:
@@ -97,6 +116,7 @@ about:
     - THIRDPARTY.yml
   homepage: https://pypi.org/project/pyproject-fmt
   repository: https://github.com/tox-dev/toml-fmt
+  documentation: https://pyproject-fmt.readthedocs.io
 
 extra:
   recipe-maintainers:
