@@ -65,8 +65,15 @@ requirements:
 tests:
   - package_contents:
       strict: true
+      bin:
+        - if: not is_abi3
+          then:
+            - pyproject-fmt
       files:
         - etc/conda/test-files/pyproject-fmt/**
+        - if: win and not is_abi3
+          then:
+            - Scripts/pyproject-fmt-script.py
       site_packages:
         - pyproject_fmt/**
         - pyproject_fmt-${{ version }}.dist-info/**
