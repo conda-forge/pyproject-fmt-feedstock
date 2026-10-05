@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "2.30.0"
+  version: "2.30.1"
   python_check_max: "3.14"
   cargo_wrapper: cargo-auditable-wrapper${{ ".sh" if unix else ".bat" }}
   unlink_tests: test_build_backend.py
@@ -13,7 +13,7 @@ package:
 
 source:
   url: https://files.pythonhosted.org/packages/source/p/pyproject-fmt/pyproject_fmt-${{ version }}.tar.gz
-  sha256: 1cf1e2b7e3674102fbf5fd6667fb6cde094a144e2e88e4fab0f79a382f6fa060
+  sha256: b2cc23c09b068dcdb00360f3eb59882d74e626e0784e73f0356a3791378a2e5c
 
 build:
   number: 1
@@ -56,7 +56,6 @@ requirements:
         - python ${{ python_min }}.*
   run:
     - python
-    - toml-fmt-common
     - if: is_abi3
       then:
         - python-abi3
