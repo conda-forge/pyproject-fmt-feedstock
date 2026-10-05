@@ -56,7 +56,6 @@ requirements:
         - python ${{ python_min }}.*
   run:
     - python
-    - toml-fmt-common
     - if: is_abi3
       then:
         - python-abi3
