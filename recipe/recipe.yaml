@@ -49,17 +49,19 @@ requirements:
   host:
     - maturin >=1.15
     - pip
-    - python
     - if: is_abi3
       then:
-        - python-abi3
         - python ${{ python_min }}.*
+        - python-abi3
+      else:
+        - python
   run:
-    - python
     - if: is_abi3
       then:
-        - python-abi3
         - python >=${{ python_min }}
+        - python-abi3
+      else:
+        - python
 
 tests:
   - package_contents:
