@@ -2,7 +2,7 @@
 schema_version: 1
 
 context:
-  version: "2.30.3"
+  version: "2.30.6"
   python_check_max: "3.14"
   cargo_wrapper: cargo-auditable-wrapper${{ ".sh" if unix else ".bat" }}
   unlink_tests: test_build_backend.py
@@ -13,7 +13,7 @@ package:
 
 source:
   url: https://files.pythonhosted.org/packages/source/p/pyproject-fmt/pyproject_fmt-${{ version }}.tar.gz
-  sha256: f727df9a687d63b8fa0297571611ba1c25146787dd3836fa805cf5b5a6120887
+  sha256: ffd8fb8c245de951a8a944d00ceb536f55f080d70e38e7c8f86bb114f63e4574
 
 build:
   number: 0
