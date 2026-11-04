@@ -15,7 +15,7 @@ except ImportError:
 WIN = sys.platform == "win32"
 SP_DIR = Path(site.getsitepackages()[-1])
 PKG_SP_DIR = SP_DIR / "pyproject_fmt"
-ABI3_EXT = "*.pyd" if WIN else "*.abi3.so"
+ABI3_EXT = ".pyd" if WIN else ".abi3.so"
 
 FAIL_UNDER = "78"
 COV = ["coverage"]
@@ -57,8 +57,10 @@ def check_abi(python_min: str) -> int:
     if not IS_ABI3:
         print("... abi3audit not available, skipping")
         return 0
-    bins = sorted(PKG_SP_DIR.rglob(ABI3_EXT))
+    paths = sorted(PKG_SP_DIR.rglob("*"))
+    bins = [p for p in paths if p.name.endswith(ABI3_EXT)]
     if not bins:
+        print("\n\t".join(p.name for p in paths))
         print(f"!!! no `{ABI3_EXT}` found in: {PKG_SP_DIR}")
         return 1
     return do("abi3audit", "-s", "-v", "--assume-minimum-abi3", python_min, *bins)
